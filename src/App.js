@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+import "./App.css"
+import { SearchInput, ListRepo } from './components'
+import useFetch from './hooks/useFetch'
+export const App = () => {
+  const [query, setQuery] = useState('')
+  const {data, loading} = useFetch(query)
 
-function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='layout'>
+      <div className='container'>
+        <SearchInput
+        setQuery={setQuery}
+        loading={loading}
+        />
+        <ListRepo 
+        data={data}
+        />
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

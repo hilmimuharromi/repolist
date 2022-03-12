@@ -1,8 +1,11 @@
 import React from 'react'
-
+import { SearchInput, ListRepo } from './components'
 export const App = () => {
   return (
-    <div>App</div>
+    <div>
+      <SearchInput />
+      <ListRepo />
+    </div>
   )
 }
 

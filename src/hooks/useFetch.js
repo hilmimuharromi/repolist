@@ -1,36 +1,47 @@
 import { useEffect, useState } from "react"
 
-
 const useFetch = (query) => {
-    const [status, setStatus] = useState('idle');
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
 
     useEffect(() => {
-        if (!query) return;
 
         const fetchData = async () => {
             try {
                 setLoading(true)
-                setStatus('fetching');
                 const response = await fetch(
-                    `https://api.github.com/users/${query}/repos`
+                    `https://api.github.com/users/${query}/repos?sort=updated`, {
+                        headers: {
+                            accept: 'application/vnd.github.v3+json'
+                        }
+                    }
                 );
-                const data = await response.json();
-                setData(data.hits);
-                setStatus('fetched');
-            } catch(err) {
+                if (response.status === 200) {
+                    const data = await response.json();
+                    setData({
+                        status: 'Found',
+                        data: data
+                    })
+                } else {
+                    console.log('masuuuk')
+                    setData({
+                        status: 'Not Found',
+                        data: []
+                    })
+                }
+            } catch (err) {
+                console.log('error', err)
                 setError(err)
             } finally {
-            setLoading(false)
+                setLoading(false)
             }
         };
 
         fetchData();
     }, [query]);
 
-    return { status, data, loading, error };
+    return { data, loading, error };
 }
 
 export default useFetch

@@ -7,7 +7,6 @@ const SearchInput = ({setQuery, loading}) => {
             className='flex justify-center'
             onSubmit={(e) => {
                 e.preventDefault()
-                // console.log('masuk', input)
                 setQuery(input)
             }
             }>
